@@ -6,13 +6,9 @@ import { z } from 'zod'
 const app = fastify();
 
 app.register(cors, {
-  origin: [
-    'https://meu-frontend.com',
-    'https://*.github.dev' 
-  ],
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
+  allowedHeaders: ['Content-Type']
 })
 
 const prisma = new PrismaClient()
