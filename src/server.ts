@@ -19,6 +19,17 @@ app.get("/tasks", async () => {
   return { tasks }
 });
 
+app.get("/tasks/:id", async (req, reply) => {
+  const getTaskSchema = z.object({
+    id: z.coerce.number().int().positive() // Converte para número
+  })
+  
+  const { id } = getTaskSchema.parse(req.params)
+  const task = await prisma.task.findUnique({ where: { id } })
+
+  return task || reply.status(404).send({ message: 'Tarefa não encontrada' })
+})
+
 app.post("/tasks", async (req, reply) => {
   const createTaskSchema = z.object({
     title: z.string().min(1).max(50),
