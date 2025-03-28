@@ -1,8 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 import fastify from "fastify";
+import cors from '@fastify/cors'
 import { z } from 'zod'
 
 const app = fastify();
+
+app.register(cors, {
+  origin: [
+    'https://meu-frontend.com',
+    'https://*.github.dev' 
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+})
 
 const prisma = new PrismaClient()
 
